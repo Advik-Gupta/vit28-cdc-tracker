@@ -27,7 +27,7 @@ export default async function Branch({ params, searchParams }: { params: Promise
         <table className="tbl">
           <thead>
             <tr>
-              <th>Company</th><th className="hidden sm:table-cell">Type</th><th className="num">Stipend</th><th className="num hidden sm:table-cell">CTC</th>
+              <th>Company</th><th>Type</th><th className="num">Stipend</th><th className="num">CTC</th>
               <th className="num">On lists</th><th className="num">Selected</th>
             </tr>
           </thead>
@@ -38,9 +38,9 @@ export default async function Branch({ params, searchParams }: { params: Promise
                   <Link href={`/companies/${c.company_id}`} className="font-medium hover:underline">{c.company}</Link>
                   {c.program && <span className="text-muted"> · {c.program}</span>}
                 </td>
-                <td className="hidden text-ink-2 sm:table-cell">{CATEGORY_LABEL[c.category] ?? c.category}</td>
+                <td className="text-ink-2">{CATEGORY_LABEL[c.category] ?? c.category}</td>
                 <td className="num">{stipend(c.stipend_monthly)}</td>
-                <td className="num hidden sm:table-cell">{ctc(c.ctc_lpa)}</td>
+                <td className="num">{ctc(c.ctc_lpa)}</td>
                 <td className="num">{c.reached}</td>
                 <td className="num font-medium">{c.selected || "—"}</td>
               </tr>

@@ -37,16 +37,16 @@ export default async function Students({ searchParams }: { searchParams: Promise
         <div className="overflow-x-auto">
           <table className="tbl">
             <thead>
-              <tr><th>Reg no.</th><th>Name</th><th className="hidden sm:table-cell">Branch</th><th className="hidden md:table-cell">Campus</th><th className="num hidden sm:table-cell">Drives</th><th>Selected at</th></tr>
+              <tr><th>Reg no.</th><th>Name</th><th>Branch</th><th>Campus</th><th className="num">Drives</th><th>Selected at</th></tr>
             </thead>
             <tbody>
               {rows.map((s) => (
                 <tr key={s.regno}>
                   <td className="tabular-nums"><Link href={`/students/${s.regno}`} className="font-medium hover:underline">{s.regno}</Link></td>
                   <td className={s.name ? "" : "text-muted"}>{studentName(s)}</td>
-                  <td className="hidden sm:table-cell"><Link href={`/branches/${s.branch}`} className="hover:underline">{s.branch}</Link></td>
-                  <td className="hidden md:table-cell"><CampusPill campus={s.campus} /></td>
-                  <td className="num hidden sm:table-cell">{s.drives}</td>
+                  <td><Link href={`/branches/${s.branch}`} className="hover:underline">{s.branch}</Link></td>
+                  <td><CampusPill campus={s.campus} /></td>
+                  <td className="num">{s.drives}</td>
                   <td>{s.selected ?? <span className="text-muted">—</span>}</td>
                 </tr>
               ))}

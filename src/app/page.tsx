@@ -174,7 +174,7 @@ export default async function Overview({ searchParams }: { searchParams: Promise
       </div>
 
       {months.size > 1 && (
-        <Card title="New drives by month" className="mt-3 pb-9">
+        <Card title="New drives by month" className="mt-3">
           <Columns data={[...months].map(([label, value]) => ({ label, value, hint: `${value} drives first announced in ${label}` }))} />
         </Card>
       )}

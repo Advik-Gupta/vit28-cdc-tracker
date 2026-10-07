@@ -116,8 +116,10 @@ export type Bar = { label: string; value: number; display?: string; href?: strin
 /** Horizontal bars for one measure: label, bar from a shared baseline, value at the tip. */
 export function BarList({ bars, labelWidth = 120, color = "var(--series)" }: { bars: Bar[]; labelWidth?: number; color?: string }) {
   const max = Math.max(...bars.map((b) => b.value), 1);
+  // On a phone the chart keeps its full width and scrolls sideways instead of being squeezed.
   return (
-    <ul className="flex flex-col">
+    <div className="max-md:overflow-x-auto">
+    <ul className="flex min-w-[30rem] flex-col md:min-w-0">
       {bars.map((b, i) => {
         const label = (
           <span className="flex min-w-0 items-center gap-2">
@@ -127,7 +129,7 @@ export function BarList({ bars, labelWidth = 120, color = "var(--series)" }: { b
         );
         return (
           <li key={i} className="group relative flex items-center gap-3 rounded-lg px-1.5 py-1.5 hover:bg-wash">
-            <div className="flex shrink-0" style={{ width: `min(${labelWidth}px, 42%)` }}>
+            <div className="flex shrink-0" style={{ width: labelWidth }}>
               {b.href ? <Link href={b.href} className="min-w-0 hover:underline">{label}</Link> : label}
             </div>
             <div className="flex min-w-0 flex-1 items-center gap-2 border-l border-axis">
@@ -143,6 +145,7 @@ export function BarList({ bars, labelWidth = 120, color = "var(--series)" }: { b
         );
       })}
     </ul>
+    </div>
   );
 }
 
@@ -152,13 +155,14 @@ export type Part = { name: string; value: number; color: string };
 export function StackedBars({ rows, labelWidth = 56 }: { rows: { label: string; href?: string; parts: Part[] }[]; labelWidth?: number }) {
   const max = Math.max(...rows.map((r) => r.parts.reduce((a, p) => a + p.value, 0)), 1);
   return (
-    <ul className="flex flex-col">
+    <div className="max-md:overflow-x-auto">
+    <ul className="flex min-w-[26rem] flex-col md:min-w-0">
       {rows.map((r) => {
         const total = r.parts.reduce((a, p) => a + p.value, 0);
         const shown = r.parts.filter((p) => p.value > 0);
         return (
           <li key={r.label} className="group relative flex items-center gap-3 rounded-lg px-1.5 py-1.5 hover:bg-wash">
-            <div className="shrink-0 truncate text-[13px] text-ink-2" style={{ width: `min(${labelWidth}px, 42%)` }}>
+            <div className="shrink-0 truncate text-[13px] text-ink-2" style={{ width: labelWidth }}>
               {r.href ? <Link href={r.href} className="hover:underline">{r.label}</Link> : r.label}
             </div>
             <div className="flex min-w-0 flex-1 items-center gap-2 border-l border-axis">
@@ -177,6 +181,7 @@ export function StackedBars({ rows, labelWidth = 56 }: { rows: { label: string; 
         );
       })}
     </ul>
+    </div>
   );
 }
 
@@ -239,7 +244,8 @@ export function branchParts(students: { branch: string }[], order: string[], kee
 export function Columns({ data }: { data: { label: string; value: number; hint?: string }[] }) {
   const max = Math.max(...data.map((d) => d.value), 1);
   return (
-    <div className="flex h-40 items-end gap-2 border-b border-axis">
+    <div className="overflow-x-auto pb-6">
+    <div className="flex h-40 items-end gap-2 border-b border-axis" style={{ minWidth: data.length * 52 }}>
       {data.map((d) => (
         <div key={d.label} className="relative flex h-full min-w-0 flex-1 flex-col items-center justify-end" title={d.hint}>
           <span className="mb-1 text-xs tabular-nums text-ink">{d.value}</span>
@@ -247,6 +253,7 @@ export function Columns({ data }: { data: { label: string; value: number; hint?:
           <span className="absolute -bottom-5 truncate text-[11px] text-muted">{d.label}</span>
         </div>
       ))}
+    </div>
     </div>
   );
 }

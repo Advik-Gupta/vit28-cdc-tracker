@@ -122,13 +122,13 @@ export function DrivesTable({ drives }: { drives: DriveRow[] }) {
           <thead>
             <tr>
               <Th k="company">Company</Th>
-              <th className="hidden md:table-cell">Type</th>
+              <th>Type</th>
               <Th k="stipend_monthly" right>Stipend</Th>
-              <Th k="ctc_lpa" right className="hidden sm:table-cell">CTC</Th>
-              <th className="hidden lg:table-cell">Latest stage</th>
-              <Th k="listed" right className="hidden sm:table-cell">Shortlisted</Th>
+              <Th k="ctc_lpa" right>CTC</Th>
+              <th>Latest stage</th>
+              <Th k="listed" right>Shortlisted</Th>
               <Th k="selected" right>Selected</Th>
-              <Th k="last_update" right className="hidden md:table-cell">Updated</Th>
+              <Th k="last_update" right>Updated</Th>
             </tr>
           </thead>
           <tbody>
@@ -140,21 +140,19 @@ export function DrivesTable({ drives }: { drives: DriveRow[] }) {
                     <span className="min-w-0">
                       <span className="font-medium">{d.company}</span>
                       {(d.program || d.role) && <span className="block text-xs text-muted">{[d.program, d.role].filter(Boolean).join(" · ")}</span>}
-                      {/* On a phone the hidden columns fold in under the name. */}
-                      <span className="block text-xs text-muted md:hidden">{d.stage ?? CATEGORY_LABEL[d.category]} · {shortDay(d.last_update)}</span>
                     </span>
                   </Link>
                 </td>
-                <td className="hidden whitespace-nowrap text-ink-2 md:table-cell">
+                <td className="whitespace-nowrap text-ink-2">
                   {CATEGORY_LABEL[d.category] ?? d.category}
                   {d.batch && <span className="text-muted"> · {d.batch}</span>}
                 </td>
                 <td className="num whitespace-nowrap">{stipend(d.stipend_monthly, d.stipend_monthly ? null : d.stipend_text ? "Later" : null)}</td>
-                <td className="num hidden whitespace-nowrap sm:table-cell">{ctc(d.ctc_lpa, d.ctc_lpa ? null : d.ctc_text ? "Later" : null)}</td>
-                <td className="hidden text-ink-2 lg:table-cell">{d.stage ?? "—"}</td>
-                <td className="num hidden sm:table-cell">{d.listed || "—"}</td>
+                <td className="num whitespace-nowrap">{ctc(d.ctc_lpa, d.ctc_lpa ? null : d.ctc_text ? "Later" : null)}</td>
+                <td className="text-ink-2">{d.stage ?? "—"}</td>
+                <td className="num">{d.listed || "—"}</td>
                 <td className="num font-medium">{d.selected || "—"}</td>
-                <td className="num hidden whitespace-nowrap text-muted md:table-cell">{shortDay(d.last_update)}</td>
+                <td className="num whitespace-nowrap text-muted">{shortDay(d.last_update)}</td>
               </tr>
             ))}
             {!rows.length && (

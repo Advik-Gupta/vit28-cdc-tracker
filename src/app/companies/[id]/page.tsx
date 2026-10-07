@@ -140,14 +140,14 @@ export default async function Company({ params }: { params: Promise<{ id: string
                           <summary className="link cursor-pointer text-xs text-ink-2">Student list ({r.students.length})</summary>
                           <div className="mt-2 max-h-[30rem] overflow-auto rounded-xl border border-line">
                             <table className="tbl">
-                              <thead><tr><th>Reg no.</th><th>Name</th><th className="hidden sm:table-cell">Branch</th><th className="hidden sm:table-cell">Campus</th><th>Other drives</th></tr></thead>
+                              <thead><tr><th>Reg no.</th><th>Name</th><th>Branch</th><th>Campus</th><th>Other drives</th></tr></thead>
                               <tbody>
                                 {sorted.slice(0, SHOWN).map((s) => (
                                   <tr key={s.regno}>
                                     <td className="tabular-nums"><Link href={`/students/${s.regno}`} className="hover:underline">{s.regno}</Link></td>
                                     <td className={s.name ? "" : "text-muted"}>{studentName(s)}</td>
-                                    <td className="hidden sm:table-cell">{s.branch}</td>
-                                    <td className="hidden sm:table-cell"><CampusPill campus={s.campus} /></td>
+                                    <td>{s.branch}</td>
+                                    <td><CampusPill campus={s.campus} /></td>
                                     <td><ElsewhereBadges e={also.get(s.regno)} /></td>
                                   </tr>
                                 ))}
